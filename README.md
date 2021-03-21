@@ -2,6 +2,12 @@
 
 A new Flutter project.
 
+# 実行
+通常起動されるとネットワーク画像の表示が出来ない為、以下コマンドで起動させる。
+```
+$ flutter run -d chrome --web-renderer html
+```
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
