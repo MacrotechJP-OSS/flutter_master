@@ -11,30 +11,20 @@ class Top extends StatefulWidget {
 }
 
 class _TopState extends State<Top> {
-  bool get isPlaying => _controller.isActive ?? false;
-
   Artboard _riveArtboard;
-
+  // ignore: unused_field
   RiveAnimationController _controller;
-
   @override
   void initState() {
     super.initState();
-
-    // Load the animation file from the bundle, note that you could also
-    // download this. The RiveFile just expects a list of bytes.
-    rootBundle.load('assets/off_road_car.riv').then(
+    rootBundle.load('assets/new_file (1).riv').then(
       (data) async {
         final file = RiveFile();
 
-        // Load the RiveFile from the binary data.
         if (file.import(data)) {
-          // The artboard is the root of the animation and gets drawn in the
-          // Rive widget.
           final artboard = file.mainArtboard;
-          // Add a controller to play back a known animation on the main/default
-          // artboard.We store a reference to it so we can toggle playback.
-          artboard.addController(_controller = SimpleAnimation('idle'));
+
+          artboard.addController(_controller = SimpleAnimation('Untitled 1'));
           setState(() => _riveArtboard = artboard);
         }
       },
@@ -63,76 +53,106 @@ class _TopState extends State<Top> {
               ),
               child: Column(
                 children: [
-                  Container(
-                    height: windowSize.height * 0.10,
-                    color: Colors.black.withOpacity(0.4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Flutter",
-                          style: GoogleFonts.merriweather(
-                            textStyle: TextStyle(
-                              fontSize: 35,
-                              color: Colors.grey,
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.4),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Flutter",
+                                style: GoogleFonts.merriweather(
+                                  textStyle: TextStyle(
+                                    fontSize: 35,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              Image.asset(
+                                "images/logo.png",
+                                height: 50,
+                                width: 50,
+                              ),
+                              Text(
+                                "Master",
+                                style: GoogleFonts.merriweather(
+                                  textStyle: TextStyle(
+                                    fontSize: 35,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 250,
+                            child: Divider(
+                              color: Colors.grey.shade200,
+                              thickness: 2,
                             ),
                           ),
-                        ),
-                        Image.asset(
-                          "images/logo.png",
-                          height: 50,
-                          width: 50,
-                        ),
-                        Text(
-                          "Master",
-                          style: GoogleFonts.merriweather(
-                            textStyle: TextStyle(
-                              fontSize: 35,
-                              color: Colors.grey,
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.all(30),
+                              color: Colors.yellow,
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.all(30),
+                              color: Colors.pink,
+                              child: Rive(artboard: _riveArtboard),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Container(
-                    height: windowSize.height * 0.7,
-                    color: Colors.black.withOpacity(0.4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.all(30),
-                            color: Colors.yellow,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.all(30),
-                            color: Colors.pink,
-                            child: Rive(artboard: _riveArtboard),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: windowSize.height * 0.2,
-                    color: Colors.black.withOpacity(0.4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "START",
-                            style: TextStyle(fontSize: 25),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.all(40)),
-                        )
-                      ],
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: Text(
+                              "START",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 5,
+                                  color: Colors.black),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.cyanAccent,
+                                onPrimary: Colors.black,
+                                elevation: 16,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                side: const BorderSide(),
+                                padding: EdgeInsets.only(
+                                    left: 60, right: 60, top: 20, bottom: 20)),
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -260,6 +280,12 @@ class _TopState extends State<Top> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.close),
+        onPressed: () {
+          SystemNavigator.pop();
+        },
       ),
     );
   }
