@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_master/view/components/rive_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:rive/rive.dart';
 
 class Top extends StatefulWidget {
   //試し
@@ -11,26 +10,6 @@ class Top extends StatefulWidget {
 }
 
 class _TopState extends State<Top> {
-  Artboard _riveArtboard;
-  // ignore: unused_field
-  RiveAnimationController _controller;
-  @override
-  void initState() {
-    super.initState();
-    rootBundle.load('assets/new_file (1).riv').then(
-      (data) async {
-        final file = RiveFile();
-
-        if (file.import(data)) {
-          final artboard = file.mainArtboard;
-
-          artboard.addController(_controller = SimpleAnimation('Untitled 1'));
-          setState(() => _riveArtboard = artboard);
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // 画面全体サイズ
@@ -109,14 +88,21 @@ class _TopState extends State<Top> {
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.all(30),
-                              color: Colors.yellow,
+                              color: Colors.pink,
+                              child: RiveAnimation(
+                                assetpath: "assets/off_road_car.riv",
+                                animation: "idle",
+                              ),
                             ),
                           ),
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.all(30),
                               color: Colors.pink,
-                              child: Rive(artboard: _riveArtboard),
+                              child: RiveAnimation(
+                                assetpath: "assets/sample.riv",
+                                animation: "Untitled 1",
+                              ),
                             ),
                           ),
                         ],
